@@ -5,8 +5,4 @@ const PORT = process.env.PORT;
 
 connectMongoDB();
 
-app.listen(PORT, () =>
-  console.log(
-    `Server running at PORT : ${PORT} in ${process.env.NODE_ENV} mode`
-  )
-);
+app.listen(PORT, () => console.log(`Server running at PORT : ${PORT}`));
