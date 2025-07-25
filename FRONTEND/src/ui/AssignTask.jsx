@@ -43,29 +43,35 @@ export const AssignTask = ({
 
   const priority = ["Low", "Medium", "High"];
 
-  const handleSubmitForm = (e) => {
+  const handleSubmitForm = async (e) => {
     e.preventDefault();
 
-    if (editTaskId) {
-      updateTask(editTaskId, assignTask);
-    } else {
-      createTask(assignTask);
-    }
+    try {
+      if (editTaskId) {
+        await updateTask(editTaskId, assignTask);
+      } else {
+        await createTask(assignTask);
+      }
 
-    setAssignTask({
-      title: "",
-      description: "",
-      priority: "",
-      dueDate: "",
-      assignedTo: "",
-    });
-    setIsAssignFormOpen(false);
+      setAssignTask({
+        title: "",
+        description: "",
+        priority: "",
+        dueDate: "",
+        assignedTo: "",
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsAssignFormOpen(false);
+    }
   };
   const handleCancelBtn = () => {
     setIsAssignFormOpen(false);
     setEditTaskId(null);
   };
 
+  // comment to check theme output
   return (
     <div className="inset-0 left-1/2 top-12 transform -translate-x-1/2 h-fit bg-[var(--ui-color)] rounded-lg fixed w-100 py-4 px-6 shadow-[0px_0px_20px_rgb(0,0,0,.7)]  opacity-90">
       <form
