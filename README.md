@@ -20,7 +20,7 @@ A full-stack Employee Management System built with MERN stack (MongoDB, Express.
 - **Frontend:** React, TailwindCSS, Axios
 - **Backend:** Node.js, Express.js, JWT, MongoDB
 - **Database:** MongoDB Atlas / local MongoDB
-- **State Management:** React Context / useState
+- **State Management:** Zustand
 
 ---
 
