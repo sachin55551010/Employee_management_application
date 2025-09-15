@@ -25,7 +25,7 @@ export const AdminDashboard = () => {
   };
 
   return (
-    <div className="relative pt-[var(--navbar-height)]">
+    <div className="relative pt-[var(--navbar-height)] px-2">
       <div
         className={`min-h-[calc(100vh-var(--navbar-height))] ${
           isAssignFormOpen ? "blur-sm" : ""
@@ -34,10 +34,10 @@ export const AdminDashboard = () => {
         <div>
           <TaskMonitor />
 
-          <div className=" flex items-center mt-5 gap-3">
+          <div className=" flex items-center justify-between mt-5 gap-1">
             <button
               onClick={handleCreateBtn}
-              className="ml-3 bg-[var(--button-color)] py-1 px-2 rounded-md font-semibold text-gray-900 cursor-pointer hover:scale-110 transition-transform duration-200 text-sm"
+              className="bg-[var(--button-color)] py-1 px-2 rounded-md font-semibold text-gray-900 cursor-pointer hover:scale-110 transition-transform duration-200 text-sm"
             >
               Create Task
             </button>

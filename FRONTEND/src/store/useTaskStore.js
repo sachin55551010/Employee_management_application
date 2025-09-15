@@ -1,8 +1,9 @@
 import { create } from "zustand";
 import { axiosInstance } from "../libs/axiosInstance";
 import toast from "react-hot-toast";
+import { useAuthStore } from "./useAuthStore";
 
-export const useTaskStore = create((set) => ({
+export const useTaskStore = create((set, get) => ({
   allTasks: [],
   refresh: false,
   taskCount: null,
@@ -82,10 +83,48 @@ export const useTaskStore = create((set) => ({
   updateTaskStatus: async (id, data) => {
     try {
       const res = await axiosInstance.put(`/task/update-status/${id}`, data);
-      console.log(res.data);
       set((state) => ({ refresh: !state.refresh }));
     } catch (error) {
       console.log(error);
     }
+  },
+  subscribeTasks: () => {
+    const socket = useAuthStore.getState().socket;
+
+    socket.on("newTask", (newTask) => {
+      set({
+        allTasks: [...get().allTasks, newTask],
+      });
+      get().updateTaskCount();
+    });
+
+    socket.on("deleteTask", (id) => {
+      set({
+        allTasks: get().allTasks.filter((task) => task._id !== id),
+      });
+      get().updateTaskCount();
+    });
+    socket.on("updatedTask", (id, updatedTask) => {
+      set({
+        allTasks: get().allTasks.map((task) =>
+          task._id === id ? updatedTask : task
+        ),
+      });
+      console.log("task updated");
+    });
+
+    socket.on("taskCountsUpdated", (counts) => {
+      set({
+        taskCounts: counts,
+      });
+    });
+    socket.on("updatedStatus", (id, updatedStatus) => {
+      set({
+        allTasks: get().allTasks.map((task) =>
+          task._id === id ? updatedStatus : task
+        ),
+      });
+      get().updateTaskCount();
+    });
   },
 }));

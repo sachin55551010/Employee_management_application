@@ -1,5 +1,7 @@
+import { getReceiverSocketId } from "../app.js";
 import { CustomErrHandler } from "../middlewares/CustomErrHandler.js";
 import { Task } from "../models/task.model.js";
+import { io } from "../utils/socket.js";
 export const createTask = async (req, res, next) => {
   try {
     const { title, description, priority, dueDate, assignedTo } = req.body;
@@ -22,6 +24,12 @@ export const createTask = async (req, res, next) => {
       dueDate,
       createdBy: req.user._id,
     });
+
+    const receiverSocketId = getReceiverSocketId(assignedTo);
+
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("newTask", newTask);
+    }
 
     return res.status(201).json({
       newTask,
@@ -67,6 +75,18 @@ export const deleteTask = async (req, res, next) => {
     const { id } = req.params;
 
     const deleteTask = await Task.findByIdAndDelete(id);
+    console.log("full task", deleteTask.assignedTo);
+    console.log("normal id :", id);
+    console.log("delete task Id : ", deleteTask._id);
+
+    if (!deleteTask) return;
+    const receiverSocketId = getReceiverSocketId(deleteTask.assignedTo);
+
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("deleteTask", id);
+      console.log("Task deleted backend");
+    }
+
     return res.status(201).json({
       deleteTask,
       message: "Task deleted successfully",
@@ -81,13 +101,17 @@ export const deleteTask = async (req, res, next) => {
 export const updateTask = async (req, res, next) => {
   try {
     const { id } = req.params;
-
     const updatedFields = req.body;
 
     const updatedTask = await Task.findByIdAndUpdate(id, updatedFields, {
       new: true,
       runValidators: true,
     });
+    const receiverSocketId = getReceiverSocketId(updatedTask.assignedTo);
+
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("updatedTask", id, updatedTask);
+    }
 
     res.status(201).json({
       updatedTask,
@@ -119,6 +143,7 @@ export const updateTaskCount = async (req, res, next) => {
         Completed,
         Rejected,
       };
+      io.emit("taskCountsUpdated", taskCounts);
     } else {
       const [all, Pending, Accepted, Completed, Rejected] = await Promise.all([
         Task.countDocuments({ assignedTo: req.user._id }),
@@ -155,7 +180,15 @@ export const updateTaskStatus = async (req, res, next) => {
       id,
       { status },
       { new: true }
-    );
+    ).populate("createdBy", "-password");
+
+    //! getting admin id to update socket
+    const receiverSocketId = getReceiverSocketId(taskStatus.createdBy._id);
+
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("updatedStatus", id, taskStatus);
+      console.log("status Updated");
+    }
     res.status(201).json({ taskStatus, success: true });
   } catch (error) {
     console.log(error);

@@ -2,16 +2,18 @@ import { User } from "../models/user.model.js";
 import { CustomErrHandler } from "../middlewares/CustomErrHandler.js";
 import { sendCookies } from "../utils/sendCookie.js";
 import bcrypt from "bcryptjs";
+import { config } from "dotenv";
+config();
 
 export const defaultAdmin = async () => {
   try {
     const adminExists = await User.findOne({ role: "admin" });
 
     if (!adminExists) {
-      const hashedPassword = await bcrypt.hash("admin12345", 10); // default password
+      const hashedPassword = bcrypt.hash(process.env.ADMIN_PASSWORD, 10); // default password
       await User.create({
         name: "Admin",
-        email: "admin@gmail.com",
+        email: process.env.ADMIN_ID,
         password: hashedPassword,
         role: "admin",
       });
@@ -104,8 +106,8 @@ export const logout = (req, res) => {
     .status(200)
     .clearCookie("token", {
       httpOnly: true,
-      sameSite: process.env.NODE_ENV === "development" ? "lax" : "none",
-      secure: process.env.NODE_ENV === "development" ? false : true,
+      sameSite: "lax",
+      secure: false,
     })
     .json({ message: "Logout successfully", success: true });
 };

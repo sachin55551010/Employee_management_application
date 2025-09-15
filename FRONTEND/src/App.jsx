@@ -21,7 +21,7 @@ function App() {
 
   if (isCheckingAuth && !authUser) {
     return (
-      <div className="h-[calc(100vh-var(--navbar-height))] flex justify-center items-center ">
+      <div className="h-[calc(100vh-var(--navbar-height))] flex justify-center items-center">
         <PiSpinnerBold className="text-4xl animate-spin" />
       </div>
     );

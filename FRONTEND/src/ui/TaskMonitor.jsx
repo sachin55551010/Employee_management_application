@@ -49,7 +49,7 @@ export const TaskMonitor = () => {
   ];
   return (
     <div className="">
-      <div className=" grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 px-3 pt-4">
+      <div className=" grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 pt-4">
         {taskList.map((tasks, index) => {
           return (
             <div

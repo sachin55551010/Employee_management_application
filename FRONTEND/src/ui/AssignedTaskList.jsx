@@ -14,8 +14,14 @@ export const AssignedTaskList = ({
   searchValue,
 }) => {
   const [deleteTaskId, setDeleteTaskId] = useState(null);
-  const { getAllTask, refresh, allTasks, updateTaskStatus, isCheckingTask } =
-    useTaskStore();
+  const {
+    getAllTask,
+    refresh,
+    allTasks,
+    updateTaskStatus,
+    isCheckingTask,
+    subscribeTasks,
+  } = useTaskStore();
   const { authUser } = useAuthStore();
   useEffect(() => {
     getAllTask({
@@ -23,7 +29,15 @@ export const AssignedTaskList = ({
       status: statusFilter,
       search: searchValue,
     });
-  }, [priorityFilter, statusFilter, searchValue, refresh]);
+    subscribeTasks();
+  }, [
+    priorityFilter,
+    statusFilter,
+    searchValue,
+    refresh,
+    subscribeTasks,
+    getAllTask,
+  ]);
 
   const role = authUser?.user?.role;
 
@@ -66,7 +80,7 @@ export const AssignedTaskList = ({
   }
 
   return (
-    <div className="px-3 mb-4">
+    <div className=" mb-4">
       {allTasks.length === 0 && <h1 className="mt-4">No Task !</h1>}
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-6">
@@ -81,30 +95,32 @@ export const AssignedTaskList = ({
               <div className="lst-contaier flex flex-col justify-between gap-2">
                 <section className="upper flex justify-between">
                   <div className="task-details flex flex-col gap-3 w-[90%]">
-                    <div className="flex gap-2 items-center">
+                    <div className="flex gap-2 justify-between">
                       <h1 className="font-semibold text-[.9rem]">
                         {task.title}
                       </h1>
-                      <div
-                        className={`text-[.7rem] ${
-                          priorityColor[task.priority]
-                        } py-1 px-3 font-bold rounded-lg `}
-                      >
-                        {task.priority}
-                      </div>
-                      <div
-                        className={`text-[.7rem] ${
-                          priorityColor[task.status]
-                        } py-1 px-2 font-semibold rounded-lg`}
-                      >
-                        {task.status}
+                      <div className=" flex gap-2 h-fit">
+                        <div
+                          className={`text-[.7rem] ${
+                            priorityColor[task.priority]
+                          } py-1 px-3 font-bold rounded-lg`}
+                        >
+                          {task.priority}
+                        </div>
+                        <div
+                          className={`text-[.7rem] ${
+                            priorityColor[task.status]
+                          } py-1 px-2 font-semibold rounded-lg`}
+                        >
+                          {task.status}
+                        </div>
                       </div>
                     </div>
                     <p className="text-white/80 text-[.85rem] h-20 mt-2">
                       {task.description}
                     </p>
                   </div>
-                  <div className="">
+                  <div className="ml-1">
                     {role === "employee" && (
                       <div className="flex flex-col gap-3">
                         {task.status === "Pending" && (

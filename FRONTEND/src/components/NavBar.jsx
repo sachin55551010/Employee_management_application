@@ -6,6 +6,7 @@ import { MdLogout } from "react-icons/md";
 import { IoSettingsSharp } from "react-icons/io5";
 import { useAuthStore } from "../store/useAuthStore";
 import { BiUser } from "react-icons/bi";
+import { FaTasks } from "react-icons/fa";
 export const NavBar = () => {
   const { authUser, logout } = useAuthStore();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,7 +19,9 @@ export const NavBar = () => {
 
   return (
     <header className="fixed z-[100] shadow-[-5px_0px_10px_rgb(0,0,0,.8)] flex justify-between w-full items-center h-[var(--navbar-height)] px-4  bg-[var(--ui-color)]">
-      <nav>Logo</nav>
+      <NavLink to="/">
+        <FaTasks className="size-6" />
+      </NavLink>
 
       <div className="flex gap-4 justify-center items-center">
         {userName && (
@@ -71,13 +74,16 @@ export const NavBar = () => {
           </div>
 
           <div className="hidden md:flex gap-3">
-            <button
-              onClick={logout}
-              className="flex items-center justify-center bg-[var(--ui-light)]/40 py-1 w-22 rounded-md text-sm font-semibold gap-1 transform transition duration-200 hover:scale-110 hover:bg-[var(--ui-light)]"
-            >
-              <MdLogout className="text-md" />
-              Logout
-            </button>
+            {authUser && (
+              <button
+                onClick={logout}
+                className="flex items-center justify-center bg-[var(--ui-light)]/40 py-1 w-22 rounded-md text-sm font-semibold gap-1 transform transition duration-200 hover:scale-110 hover:bg-[var(--ui-light)]"
+              >
+                <MdLogout className="text-md" />
+                Logout
+              </button>
+            )}
+
             <NavLink to="/setting">
               <button className="flex items-center justify-center bg-[var(--ui-light)]/40 py-1 w-22 rounded-md text-sm font-semibold gap-1 transform transition duration-200 hover:scale-110 hover:bg-[var(--ui-light)]">
                 <IoSettingsSharp className="text-md" />
