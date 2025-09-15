@@ -12,7 +12,7 @@ A full-stack Employee Management System built with MERN stack (MongoDB, Express.
 - Search, filter, and sort employee data
 - Responsive and user-friendly UI
 - Authenticated access for admins
--live updated of all changes
+- Can see live changes made by user or admin
 
 ---
 
