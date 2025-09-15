@@ -20,7 +20,7 @@ export const EmployeeDashboard = () => {
     updateTaskCount();
   }, []);
   return (
-    <div className="h-screen pt-[var(--navbar-height)]">
+    <div className="h-screen pt-[var(--navbar-height)] p-2">
       <TaskMonitor />
       <div className="ml-4 mt-6">
         <TaskSearchFilter

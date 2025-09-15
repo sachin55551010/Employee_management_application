@@ -9,6 +9,29 @@
   --button-color: #03e1f5;
 }
 
+/* Target the scrollbar */
+::-webkit-scrollbar {
+  width: 12px; /* width of vertical scrollbar */
+  height: 12px; /* height of horizontal scrollbar */
+}
+
+/* Track (background) */
+::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 10px;
+}
+
+/* Handle (the draggable part) */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+/* Handle hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 body {
   font-family: "Poppins", sans-serif;
 }
