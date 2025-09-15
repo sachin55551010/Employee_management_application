@@ -7,8 +7,6 @@ A full-stack Employee Management System built with MERN stack (MongoDB, Express.
 ## 🚀 Features
 
 - Add, edit, and delete employee records
-- Assign roles and departments
-- View employee statistics and profiles
 - Search, filter, and sort employee data
 - Responsive and user-friendly UI
 - Authenticated access for admins
