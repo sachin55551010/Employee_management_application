@@ -1,6 +1,6 @@
 # 🧑‍💼 Employee Management System
 
-A full-stack Employee Management System built with MERN stack (MongoDB, Express.js, React.js, Node.js). This app allows admins to create, update, view, and manage employee data efficiently.
+A full-stack Employee Management System built with MERN stack (MongoDB, Express.js, React.js, Node.js, socket.io). This app allows admins to create, update, view, and manage employee data efficiently.
 
 ---
 
@@ -12,6 +12,7 @@ A full-stack Employee Management System built with MERN stack (MongoDB, Express.
 - Search, filter, and sort employee data
 - Responsive and user-friendly UI
 - Authenticated access for admins
+-live updated of all changes
 
 ---
 
@@ -54,18 +55,6 @@ npm run dev
 
 Frontend
 cd ../frontend
-npm start
+npm run dev
 
-📂 Folder Structure
-/backend
-  ├── controllers
-  ├── models
-  ├── routes
-  ├── middleware
-  └── server.js
 
-/frontend
-  ├── components
-  ├── pages
-  ├── context
-  └── App.js
