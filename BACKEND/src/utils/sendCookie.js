@@ -7,6 +7,7 @@ export const sendCookies = (user, res, message) => {
   );
   const userData = user.toObject(); // convert mongoose doc to plain object
   delete userData.password; // remove password
+
   return res
     .status(201)
     .cookie("token", token, {
