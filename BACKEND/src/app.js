@@ -34,10 +34,8 @@ export const getReceiverSocketId = (userId) => {
 app.use(errorHandler);
 const userSocketMap = {};
 io.on("connection", (socket) => {
-  console.log("User connected : ", socket.id);
   const userId = socket.handshake.query.userId;
   if (userId) userSocketMap[userId] = socket.id;
-  console.log(userSocketMap);
 
   socket.on("disconnect", () => {
     console.log("User disconncted", socket.id);
