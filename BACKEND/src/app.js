@@ -7,16 +7,19 @@ import cors from "cors";
 import { taskRoute } from "./routes/task.route.js";
 import { connectMongoDB } from "./utils/connectMongoDB.js";
 
-app.use(express.json());
-app.use(cookieParser());
 app.use(
   cors({
-    origin: [process.env.FRONTEND_URL, process.env.PRODUCTION_FRONTEND_URL],
+    origin: "https://employee-management-application-vert.vercel.app",
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+// ✅ Handle preflight for all routes
+// app.options("*", cors());
+
+app.use(express.json());
+app.use(cookieParser());
 
 //routes
 app.get("/", (_, res) => {
