@@ -11,13 +11,13 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: [process.env.FRONTEND_URL, process.env.PRODUCTION_FRONTEND_URL],
     credentials: true,
   })
 );
 
 //routes
-app.get("/api/v1", (_, res) => {
+app.get("/", (_, res) => {
   return res.status(200).send("App working fine !");
 });
 
