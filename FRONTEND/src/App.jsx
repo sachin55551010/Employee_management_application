@@ -27,7 +27,7 @@ function App() {
     );
   }
   return (
-    <div className="my-div min-h-screen">
+    <div className="my-div h-screen">
       <NavBar />
 
       <Routes>

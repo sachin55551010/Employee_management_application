@@ -25,7 +25,7 @@ export const AdminDashboard = () => {
   };
 
   return (
-    <div className="relative pt-[var(--navbar-height)] px-2">
+    <div className="my-div min-h-dvh relative pt-[var(--navbar-height)] px-2">
       <div
         className={`min-h-[calc(100vh-var(--navbar-height))] ${
           isAssignFormOpen ? "blur-sm" : ""

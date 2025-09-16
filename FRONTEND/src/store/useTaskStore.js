@@ -96,6 +96,7 @@ export const useTaskStore = create((set, get) => ({
         allTasks: [...get().allTasks, newTask],
       });
       get().updateTaskCount();
+      toast.success("New Task Added");
     });
 
     socket.on("deleteTask", (id) => {
@@ -103,6 +104,7 @@ export const useTaskStore = create((set, get) => ({
         allTasks: get().allTasks.filter((task) => task._id !== id),
       });
       get().updateTaskCount();
+      toast.success("One Task Deleted");
     });
     socket.on("updatedTask", (id, updatedTask) => {
       set({
@@ -110,7 +112,7 @@ export const useTaskStore = create((set, get) => ({
           task._id === id ? updatedTask : task
         ),
       });
-      console.log("task updated");
+      toast.success("One Task Updated");
     });
 
     socket.on("taskCountsUpdated", (counts) => {
