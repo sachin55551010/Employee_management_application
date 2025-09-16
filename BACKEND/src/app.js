@@ -18,8 +18,6 @@ app.use(
   })
 );
 
-app.options("*", cors()); // <-- handle preflight globally
-
 //routes
 app.get("/", (_, res) => {
   return res.status(200).send("App working fine !");
