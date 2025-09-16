@@ -8,7 +8,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: [process.env.PRODUCTION_FRONTEND_URL],
+    origin: "https://employee-management-application-vert.vercel.app",
     methods: ["GET", "POST"],
     credentials: true,
   },
