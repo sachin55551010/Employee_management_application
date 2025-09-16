@@ -9,7 +9,7 @@ import { connectMongoDB } from "./utils/connectMongoDB.js";
 
 app.use(
   cors({
-    origin: process.env.PRODUCTION_FRONTEND_URL,
+    origin: "https://employee-management-application-vert.vercel.app",
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
