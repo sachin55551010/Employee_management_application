@@ -17,7 +17,7 @@ app.use(
 );
 
 //routes
-app.get("/", (_, res) => {
+app.get("/api/v1", (_, res) => {
   return res.status(200).send("App working fine !");
 });
 
